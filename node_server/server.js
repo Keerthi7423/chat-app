@@ -11,10 +11,10 @@ const io = new Server(server, { cors: { origin: "*" } });
 
 // ✅ MySQL connection
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_NAME || "chat_app" 
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "chatly_db" // replace with your actual DB name
 });
 
 db.connect(err => {
