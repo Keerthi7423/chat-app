@@ -9,17 +9,24 @@ app.use(cors());
 const server = createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
+// ✅ Environment Variables
+const DB_HOST = process.env.DB_HOST || "localhost";
+const DB_USER = process.env.DB_USER || "root";
+const DB_PASS = process.env.DB_PASS || "";
+const DB_NAME = process.env.DB_NAME || "chatly_db";
+const PORT = process.env.PORT || 3000;
+
 // ✅ MySQL connection
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "chatly_db" // replace with your actual DB name
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASS,
+  database: DB_NAME
 });
 
 db.connect(err => {
   if (err) console.error("DB connection failed:", err);
-  else console.log("✅ Connected to MySQL");
+  else console.log(`✅ Connected to MySQL at ${DB_HOST}`);
 });
 
 // ✅ Socket.IO Events
@@ -63,4 +70,4 @@ io.on("connection", socket => {
   });
 });
 
-server.listen(3000, () => console.log("🚀 Socket.IO server running on port 3000"));
+server.listen(PORT, () => console.log(`🚀 Socket.IO server running on port ${PORT}`));
